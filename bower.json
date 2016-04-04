@@ -1,0 +1,26 @@
+{
+  "name": "pubnubsandbox",
+  "description": "",
+  "main": "app.js",
+  "authors": [
+    "v1ta <jodvita@gmail.com>"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/v1ta/PubNub",
+  "moduleType": [
+    "es6",
+    "globals",
+    "node"
+  ],
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "Chart.js": "^1.1.0"
+  }
+}
