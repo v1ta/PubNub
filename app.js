@@ -1,102 +1,45 @@
+// Depecencies
 var express = require('express'),
-    app = express(),
-    React = require('react'),
-    ReactDOMServer = require('react-dom/server'),
-    DOM = React.DOM,
-    body = DOM.body,
-    div = DOM.div,
-    script = DOM.script,
-    browserify = require('browserify'),
-    babelify = require("babelify");
+    bodyparser = require('body-parser'),
+    path = require('path');
 
-app.set('port', (process.argv[2] || 3000));
-app.set('view engine', 'jsx');
-app.set('views', __dirname + '/views');
-app.engine('jsx', require('express-react-views').createEngine({ transformViews: false }));
+// Global
+var app = express();
+var streamData = require('./src/twitter.js');
 
-require('babel/register')({
-    ignore: false
+// Pubnub setup
+var pubnub = require("pubnub")({
+    ssl           : false,  // <- enable TLS Tunneling over TCP
+    publish_key   : "pub-c-a8de46c1-8872-451a-b4d0-1a80a875f37b",
+    subscribe_key : "sub-c-ae145106-fc3e-11e5-b552-02ee2ddab7fe"
 });
 
-var CurrencyChart = require('./views/index.jsx');
+// Get trends & publish channels
+streamData().then(loadPage, console.error);
 
-var chartData = {
-    labels: ["Eating", "Drinking", "Sleeping", "Designing", "Coding", "Cycling", "Running"],
-    datasets: [
-        {
-            label: "My First dataset",
-            fillColor: "rgba(220,220,220,0.2)",
-            strokeColor: "rgba(220,220,220,1)",
-            pointColor: "rgba(220,220,220,1)",
-            pointStrokeColor: "#fff",
-            pointHighlightFill: "#fff",
-            pointHighlightStroke: "rgba(220,220,220,1)",
-            data: [65, 59, 90, 81, 56, 55, 40]
-        },
-        {
-            label: "My Second dataset",
-            fillColor: "rgba(151,187,205,0.2)",
-            strokeColor: "rgba(151,187,205,1)",
-            pointColor: "rgba(151,187,205,1)",
-            pointStrokeColor: "#fff",
-            pointHighlightFill: "#fff",
-            pointHighlightStroke: "rgba(151,187,205,1)",
-            data: [28, 48, 40, 19, 96, 27, 100]
-        }
-    ]
-};
+// Serve static content & start server
+function loadPage(data) {
+    console.log('channels avail: ',data);
+    app.set('view engine', 'ejs');
+    app.set('views', path.join(__dirname, 'views'));
 
-var chartOptions = {
-    scaleShowLine : true,
-    angleShowLineOut : true,
-    scaleShowLabels : false,
-    scaleBeginAtZero : true,
-    angleLineColor : "rgba(0,0,0,.1)",
-    angleLineWidth : 1,
-    pointLabelFontFamily : "'Arial'",
-    pointLabelFontStyle : "normal",
-    pointLabelFontSize : 10,
-    pointLabelFontColor : "#666",
-    pointDot : true,
-    pointDotRadius : 3,
-    pointDotStrokeWidth : 1,
-    pointHitDetectionRadius : 20,
-    datasetStroke : true,
-    datasetStrokeWidth : 2,
-    datasetFill : true,
-    legendTemplate : "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].strokeColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>"
-};
+    // Middleware
+    app.use(express.static(path.join(__dirname, 'views')));
+    app.use(bodyparser.urlencoded({
+        extended: true
+    }));
+    app.get('/', (req, res) => {
+        res.render("index")
+    })
 
-app.use('/bundle.js', function (req, res) {
-    res.setHeader('content-type', 'application/javascript');
+    var io = require('socket.io').listen(app.listen(3000, () => {
+        console.log('Starting pubnub streaming');
+    }));
 
-    browserify({ debug: true })
-        .transform(babelify.configure({
-            presets: ["react", "es2015"]
-        }))
-        .require("./src/graph.js", { entry: true })
-        .bundle()
-        .pipe(res);
-});
-
-app.use('/', function (req, res) {
-    var initialData = JSON.stringify(chartData);
-    var initialOptions = JSON.stringify(chartOptions);
-    var markup = ReactDOMServer.renderToString(React.createElement(CurrencyChart, {data: chartData, options: chartOptions}));
-
-    res.setHeader('Content-Type', 'text/html');
-
-    var html = ReactDOMServer.renderToStaticMarkup(body(null,
-        div({id: 'graph', dangerouslySetInnerHTML: {__html: markup}}),
-        script({
-            id: 'initial-data',
-            type: 'text/plain',
-            'data-json': initialData
-        }),
-        script({src: '/bundle.js'})
-    ));
-
-    res.end(html);
-});
-
-app.listen(app.get('port'), function() {});
+    io.sockets.on('connection', (socket) => {
+        socket.emit('message', data);
+        socket.on('send', (data) => {
+            io.sockets.emits('message', data);
+        });
+    });
+}

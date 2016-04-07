@@ -1,0 +1,15 @@
+.form-textarea-wrapper {
+  width: 60em;
+  max-width: 100%; /* ie8 fallback */
+}
+
+.form-textarea {
+  width: 100%;
+  min-height: 20em;
+  border: 1px solid black;
+  overflow: hidden;
+}
+
+@media screen and (max-width: 65em){
+  .form-textarea-wrapper {max-width:40em; }
+}
