@@ -4,8 +4,8 @@ var myLiveChart =  {}
 // Pubnub setup
 var pubnub = PUBNUB.init({
     ssl           : false,
-    publish_key   : "pub-c-a8de46c1-8872-451a-b4d0-1a80a875f37b",
-    subscribe_key : "sub-c-ae145106-fc3e-11e5-b552-02ee2ddab7fe",
+    publish_key   : ,// CHANNEL INFORMATION
+    subscribe_key : // GOES HERE
 });
 
 // Open socket with server
