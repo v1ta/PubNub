@@ -49,7 +49,6 @@ function getTrends(hashtags) {
             if (tweet.text !== undefined) {
                 if (tweet.entities.hashtags.length > 0) {
                     if (hashtags.indexOf(tweet.entities.hashtags[0].text) > -1) {
-                        console.log(tweet.text);
                         pubnub.publish({
                             channel: tweet.entities.hashtags[0].text,
                             message: {
