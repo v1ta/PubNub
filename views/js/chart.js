@@ -4,8 +4,8 @@ var myLiveChart =  {}
 // Pubnub setup
 var pubnub = PUBNUB.init({
     ssl           : false,
-    publish_key   : ,// CHANNEL INFORMATION
-    subscribe_key : // GOES HERE
+    publish_key   : 'pubnub keys',
+    subscribe_key : 'go here'
 });
 
 // Open socket with server
@@ -27,7 +27,8 @@ socket.on('message', (message) => {
             channel: `${channel}`,
             message: (m) => {
                 myLiveChart.datasets[0].points[i].value += 1;
-                //$('#tweet-stream').append(m.data); depending on the hashtag this can get expensive :)
+                if (m.data != undefined)
+                    $('#tweet-table > tbody:last').append('<tr><td>'+m.data+'</td></tr>');
             },
             connect: (e) => {
                 pubnub.publish({

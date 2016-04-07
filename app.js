@@ -7,13 +7,6 @@ var express = require('express'),
 var app = express();
 var streamData = require('./src/twitter.js');
 
-// Pubnub setup
-var pubnub = require("pubnub")({
-    ssl           : false,  // <- enable TLS Tunneling over TCP
-    publish_key   : ,//YOUR PUBNUB
-    subscribe_key : //CHANEL INFO HERE
-});
-
 // Get trends & publish channels
 streamData().then(loadPage, console.error);
 
