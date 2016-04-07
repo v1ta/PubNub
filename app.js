@@ -10,8 +10,8 @@ var streamData = require('./src/twitter.js');
 // Pubnub setup
 var pubnub = require("pubnub")({
     ssl           : false,  // <- enable TLS Tunneling over TCP
-    publish_key   : "pub-c-a8de46c1-8872-451a-b4d0-1a80a875f37b",
-    subscribe_key : "sub-c-ae145106-fc3e-11e5-b552-02ee2ddab7fe"
+    publish_key   : ,//YOUR PUBNUB
+    subscribe_key : //CHANEL INFO HERE
 });
 
 // Get trends & publish channels
