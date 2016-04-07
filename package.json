@@ -22,10 +22,8 @@
     "ejs": "^2.4.1",
     "es6-promise": "^3.1.2",
     "express": "^4.13.4",
-    "markup-js": "^1.5.21",
     "ntwitter": "^0.5.0",
     "pubnub": "^3.14.5",
-    "q": "^1.4.1",
     "request": "^2.69.0",
     "socket.io": "^1.4.5",
     "twitter": "^1.2.5"

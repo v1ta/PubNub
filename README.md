@@ -9,7 +9,10 @@ Radar Chart from [Chartjs](http://www.chartjs.org/) which plots 7 trends by Tota
  git clone https://github.com/v1ta/PubNub.git`
  cd PubNub
  npm install
- node app.js
  ```
- 
-If running locally, open [http://localhost:3000](http://localhost:3000)
+
+You will have to obtain [Twitter](https://dev.twitter.com/) credentials in src/twitter.js and [PubNub](https://www.pubnub.com/) channel information in views/js/chart.js.
+
+`node app.js`
+
+After supplying the pre-requisite information, open [http://localhost:3000](http://localhost:3000)
