@@ -11,7 +11,7 @@ Radar Chart from [Chartjs](http://www.chartjs.org/) which plots 7 trends by Tota
  npm install
  ```
 
-You will have to obtain [Twitter](https://dev.twitter.com/) credentials in src/twitter.js and [PubNub](https://www.pubnub.com/) channel information in views/js/chart.js. After supplying the pre-requisite information
+You will have to obtain [Twitter](https://dev.twitter.com/) credentials in src/twitter.js and [PubNub](https://www.pubnub.com/) channel information in views/js/chart.js, app.js, and src/twitter.js. After supplying the pre-requisite information
 
 ```bash
 node app.js
