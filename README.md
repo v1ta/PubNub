@@ -5,8 +5,11 @@ Radar Chart from [Chartjs](http://www.chartjs.org/) which plots 7 trends by Tota
 
 
 ###Installation
- `git clone https://github.com/v1ta/PubNub.git`
- `cd PubNub`
- `npm install`
- `node app.js`
+ ```bash
+ git clone https://github.com/v1ta/PubNub.git`
+ cd PubNub
+ npm install
+ node app.js
+ ```
+ 
 If running locally, open [http://localhost:3000](http://localhost:3000)
