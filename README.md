@@ -6,8 +6,8 @@ Radar Chart from [Chartjs](http://www.chartjs.org/) which plots 7 trends by Tota
 
 ###Installation
  ```bash
- git clone https://github.com/v1ta/PubNub.git
- cd PubNub
+ git clone https://github.com/v1ta/Twitter-Trending-Radar-Graph.git
+ cd Twitter-Trending-Radar-Graph
  npm install
  ```
 
