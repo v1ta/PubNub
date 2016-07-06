@@ -1,5 +1,5 @@
 ###Twitter Trending Radar Graph
-Radar Chart from [Chartjs](http://www.chartjs.org/) which plots 7 trends by Total Tweets and tweets per minute in real time.
+Radar Chart from [Chartjs](http://www.chartjs.org/) which plots 7 trends by total tweets and tweets per minute in real time.
 * [pubnub](https://www.npmjs.com/package/pubnub)
 * [ntwitter](https://www.npmjs.com/package/ntwitter)
 
